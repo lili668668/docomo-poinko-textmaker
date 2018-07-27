@@ -10,7 +10,7 @@ function App (props, context) {
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        {pages.map(page => ( <Route path={page.pathname} exact component={page.component} /> ))}
+        {pages.map(page => ( <Route key={page.pathname} path={page.pathname} exact component={page.component} /> ))}
       </Switch>
     </ConnectedRouter>
   )

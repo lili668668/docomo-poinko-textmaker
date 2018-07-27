@@ -6,7 +6,6 @@ import HomePage from './HomePage'
 
 class Home extends React.Component {
   render () {
-    const { classes } = this.props
     return (
       <div>
         <Helmet>
@@ -16,10 +15,6 @@ class Home extends React.Component {
       </div>
     )
   }
-}
-
-Home.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default Home
