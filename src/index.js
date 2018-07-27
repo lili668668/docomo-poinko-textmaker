@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createBrowserHistory } from 'history'
+import { createHashHistory } from 'history'
 import { Provider } from 'react-redux'
 import configureStore from './store'
 import App from './app'
 import registerServiceWorker from './registerServiceWorker'
 
-const history = createBrowserHistory()
+const history = createHashHistory()
 const store = configureStore(history)
 
 ReactDOM.render(
