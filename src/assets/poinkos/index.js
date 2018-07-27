@@ -1,0 +1,133 @@
+import p0 from './0.jpg'
+import p1 from './1.jpg'
+import p2 from './2.jpg'
+import p3 from './3.jpg'
+import p4 from './4.jpg'
+import p5 from './5.jpg'
+import p6 from './6.jpg'
+import p7 from './7.jpg'
+import p8 from './8.jpg'
+import p9 from './9.jpg'
+import p10 from './10.jpg'
+import p11 from './11.jpg'
+import p12 from './12.jpg'
+import p13 from './13.jpg'
+import p14 from './14.jpg'
+import p15 from './15.jpg'
+import p16 from './16.jpg'
+import p17 from './17.jpg'
+import p18 from './18.jpg'
+import p19 from './19.jpg'
+import p20 from './20.jpg'
+import p21 from './21.jpg'
+import p22 from './22.jpg'
+import p23 from './23.jpg'
+import p24 from './24.jpg'
+import p25 from './25.jpg'
+import p26 from './26.jpg'
+import p27 from './27.jpg'
+import p28 from './28.jpg'
+import p29 from './29.jpg'
+import p30 from './30.jpg'
+import p31 from './31.jpg'
+import p32 from './32.jpg'
+import p33 from './33.jpg'
+import p34 from './34.jpg'
+import p35 from './35.jpg'
+import p36 from './36.jpg'
+import p37 from './37.jpg'
+import p38 from './38.jpg'
+import p39 from './39.jpg'
+import p40 from './40.jpg'
+import p41 from './41.jpg'
+import p42 from './42.jpg'
+import p43 from './43.jpg'
+import p44 from './44.jpg'
+import p45 from './45.jpg'
+import p46 from './46.jpg'
+import p47 from './47.jpg'
+import p48 from './48.jpg'
+import p49 from './49.jpg'
+import p50 from './50.jpg'
+import p51 from './51.jpg'
+import p52 from './52.jpg'
+import p53 from './53.jpg'
+import p54 from './54.jpg'
+import p55 from './55.jpg'
+import p56 from './56.jpg'
+import p57 from './57.jpg'
+import p58 from './58.jpg'
+import p59 from './59.jpg'
+import p60 from './60.jpg'
+import p61 from './61.jpg'
+import p62 from './62.jpg'
+import p63 from './63.jpg'
+
+const images = [
+  { src: p0 },
+  { src: p1 },
+  { src: p2 },
+  { src: p3 },
+  { src: p4 },
+  { src: p5 },
+  { src: p6 },
+  { src: p7 },
+  { src: p8 },
+  { src: p9 },
+  { src: p10 },
+  { src: p11 },
+  { src: p12 },
+  { src: p13 },
+  { src: p14 },
+  { src: p15 },
+  { src: p16 },
+  { src: p17 },
+  { src: p18 },
+  { src: p19 },
+  { src: p20 },
+  { src: p21 },
+  { src: p22 },
+  { src: p23 },
+  { src: p24 },
+  { src: p25 },
+  { src: p26 },
+  { src: p27 },
+  { src: p28 },
+  { src: p29 },
+  { src: p30 },
+  { src: p31 },
+  { src: p32 },
+  { src: p33 },
+  { src: p34 },
+  { src: p35 },
+  { src: p36 },
+  { src: p37 },
+  { src: p38 },
+  { src: p39 },
+  { src: p40 },
+  { src: p41 },
+  { src: p42 },
+  { src: p43 },
+  { src: p44 },
+  { src: p45 },
+  { src: p46 },
+  { src: p47 },
+  { src: p48 },
+  { src: p49 },
+  { src: p50 },
+  { src: p51 },
+  { src: p52 },
+  { src: p53 },
+  { src: p54 },
+  { src: p55 },
+  { src: p56 },
+  { src: p57 },
+  { src: p58 },
+  { src: p59 },
+  { src: p60 },
+  { src: p61 },
+  { src: p62 },
+  { src: p63 }
+]
+
+export default images
