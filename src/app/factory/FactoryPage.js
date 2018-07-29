@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import TextMaker from './TextMaker'
+import poinkos from '../../assets/poinkos'
 
 const styles = theme => ({
 })
 
 function FactoryPage (props) {
-  const { classes } = props
+  const { classes, match } = props
+  const target = poinkos.find(poinko => poinko.key === match.params.id)
   return (
     <div>
-      施工中
+      <TextMaker picture={target.src} />
     </div>
   )
 }
