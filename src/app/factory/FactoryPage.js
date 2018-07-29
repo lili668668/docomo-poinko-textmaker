@@ -12,7 +12,7 @@ function FactoryPage (props) {
   const target = poinkos.find(poinko => poinko.key === match.params.id)
   return (
     <div>
-      <TextMaker picture={target.src} />
+      <TextMaker picture={target} />
     </div>
   )
 }
