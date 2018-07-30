@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AppWrapper from './shared/AppWrapper'
-import pages from './pages'
+import AppWrapper from './AppWrapper'
+import pages from '../pages'
 
 function findActivePage(currentPages, match) {
   const activePage = currentPages.find(page => match.path === page.pathname)

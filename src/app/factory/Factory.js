@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import compose from 'recompose/compose'
 import { Helmet } from 'react-helmet'
 import FactoryPage from './FactoryPage'
+import withRoot from '../shared/withRoot'
 
 class Facotry extends React.Component {
   render () {
@@ -17,4 +18,6 @@ class Facotry extends React.Component {
   }
 }
 
-export default Facotry
+export default compose(
+  withRoot
+)(Facotry)

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import compose from 'recompose/compose'
 import { Helmet } from 'react-helmet'
 import HomePage from './HomePage'
+import withRoot from '../shared/withRoot'
 
 class Home extends React.Component {
   render () {
@@ -17,4 +18,6 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default compose(
+  withRoot
+)(Home)

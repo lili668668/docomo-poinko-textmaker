@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
+import Grid from '@material-ui/core/Grid'
 
 const styles = theme => ({
   picture: {
@@ -45,7 +46,8 @@ function TextMaker (props) {
     handleTextXChange,
     handleTextYChange,
     handleTextDragEnd,
-    handleResetTextPosition
+    handleResetTextPosition,
+    handleFilenameChange
   } = props
   const {
     image,
@@ -53,35 +55,42 @@ function TextMaker (props) {
     fontSize,
     textX,
     textY,
+    filename
   } = state
   const width = picture.width
   const height = picture.height
   return (
     <div>
       <div className={classes.picture}>
-        <Stage
-          width={width}
-          height={height}
-          ref={handleStageRef}
-        >
-          <Layer>
-            <Image image={image} />
-            <Text
+        <Grid container>
+          <Grid item xs></Grid>
+          <Grid item xs>
+            <Stage
               width={width}
-              x={textX}
-              y={textY}
-              text={text}
-              align="center"
-              fill="white"
-              fontSize={fontSize}
-              fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
-              fontStyle="bold"
-              stroke="black"
-              onDragEnd={handleTextDragEnd}
-              draggable
-            />
-          </Layer>
-        </Stage>
+              height={height}
+              ref={handleStageRef}
+            >
+              <Layer>
+                <Image image={image} />
+                <Text
+                  width={width}
+                  x={textX}
+                  y={textY}
+                  text={text}
+                  align="center"
+                  fill="white"
+                  fontSize={fontSize}
+                  fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
+                  fontStyle="bold"
+                  stroke="black"
+                  onDragEnd={handleTextDragEnd}
+                  draggable
+                />
+              </Layer>
+            </Stage>
+          </Grid>
+          <Grid item xs></Grid>
+        </Grid>
       </div>
       <div>
         <TextField
@@ -100,35 +109,44 @@ function TextMaker (props) {
           onChange={handleFontSizeChange}
           fullWidth
         />
-        <div
-          className={[classes.container, classes.formItem].join(' ')}
-        >
+        <div className={classes.formItem}>
+          <p>You can drag text to move it.</p>
+          <div className={classes.container}>
+            <TextField
+              className={classes.positionInput}
+              label="X"
+              type="number"
+              value={textX}
+              onChange={handleTextXChange}
+            />
+            <TextField
+              className={classes.positionInput}
+              label="Y"
+              type="number"
+              value={textY}
+              onChange={handleTextYChange}
+            />
+            <Button onClick={handleResetTextPosition} className={classes.button}>
+              reset position
+            </Button>
+          </div>
+        </div>
+        <div className={classes.formItem}>
           <TextField
-            className={classes.positionInput}
-            label="X"
-            type="number"
-            value={textX}
-            onChange={handleTextXChange}
+            label="Filename"
+            value={filename}
+            onChange={handleFilenameChange}
+            fullWidth
           />
-          <TextField
-            className={classes.positionInput}
-            label="Y"
-            type="number"
-            value={textY}
-            onChange={handleTextYChange}
-          />
-          <Button onClick={handleResetTextPosition} className={classes.button}>
-            reset position
+          <Button
+            onClick={handleDownload}
+            className={classes.button}
+            variant="contained"
+            color="primary"
+          >
+            Download
           </Button>
         </div>
-        <Button
-          onClick={handleDownload}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        >
-          Download
-        </Button>
       </div>
     </div>
   )
@@ -152,12 +170,11 @@ const lifecycles = {
 }
 
 const handlers = {
-  handleDownload: ({ state: { stageRef } }) => () => {
+  handleDownload: ({ state: { stageRef, filename } }) => () => {
     const url = stageRef.getStage().toDataURL()
-    const filename = 'poinko.png'
     const a = document.createElement('a')
     a.style.display = 'none'
-    a.setAttribute('download', filename)
+    a.setAttribute('download', `${filename}.png`)
     a.setAttribute('target', '_blank')
     a.href = url
     document.body.appendChild(a)
@@ -178,14 +195,17 @@ const handlers = {
     const y = event.target.y()
     setState({ ...state, textX: x, textY: y })
   },
-  handleTextXChange: ({ state, setState }) => (event) =>{
+  handleTextXChange: ({ state, setState }) => (event) => {
     setState({ ...state, textX: parseInt(event.target.value) })
   },
-  handleTextYChange: ({ state, setState }) => (event) =>{
+  handleTextYChange: ({ state, setState }) => (event) => {
     setState({ ...state, textY: parseInt(event.target.value) })
   },
-  handleResetTextPosition: ({ state, setState, ...props }) => () =>{
+  handleResetTextPosition: ({ state, setState, ...props }) => () => {
     setState({ ...state, ...(initialTextPosition(props)) })
+  },
+  handleFilenameChange: ({ state, setState }) => (event) => {
+    setState({ ...state, filename: event.target.value })
   }
 }
 
