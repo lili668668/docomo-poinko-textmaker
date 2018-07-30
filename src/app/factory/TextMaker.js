@@ -6,19 +6,28 @@ import Konva from 'konva'
 import { Stage, Layer, Image, Text } from 'react-konva'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import Slider from '@material-ui/lab/Slider'
 
 const styles = theme => ({
+  slider: {
+    width: 300
+  }
 })
 
 function TextMaker (props) {
   const { classes, picture, state } = props
-  const { handleClick, handleStageRef, handleTextChange } = props
-  const { image, text } = state
+  const {
+    handleDownload,
+    handleStageRef,
+    handleTextChange,
+    handleFontSizeChange
+  } = props
+  const { image, text, fontSize } = state
   const width = picture.width
   const height = picture.height
   return (
     <div>
-      <Button onClick={handleClick}>
+      <Button onClick={handleDownload}>
         Download
       </Button>
       <Stage
@@ -34,7 +43,7 @@ function TextMaker (props) {
             text={text}
             align="center"
             fill="white"
-            fontSize={50}
+            fontSize={fontSize}
             fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
           />
         </Layer>
@@ -43,12 +52,16 @@ function TextMaker (props) {
         value={text}
         onChange={handleTextChange}
       />
+      <div className={classes.slider}>
+        <Slider value={fontSize} onChange={handleFontSizeChange} />
+      </div>
     </div>
   )
 }
 
 TextMaker.propsTypes = {
-  picture: PropTypes.string.isRequire
+  picture: PropTypes.string.isRequire,
+  defaultFontSize: PropTypes.number
 }
 
 const lifecycles = {
@@ -62,7 +75,7 @@ const lifecycles = {
 }
 
 const handlers = {
-  handleClick: ({ state: { stageRef } }) => () => {
+  handleDownload: ({ state: { stageRef } }) => () => {
     const url = stageRef.getStage().toDataURL()
     const filename = 'poinko.png'
     const a = document.createElement('a')
@@ -79,16 +92,22 @@ const handlers = {
   },
   handleTextChange: ({ state, setState }) => (event) => {
     setState({ ...state, text: event.target.value })
+  },
+  handleFontSizeChange: ({ state, setState }) => (event, value) => {
+    setState({ ...state, fontSize: value })
   }
 }
 
+const initialState = (props) => ({
+  image: null,
+  stageRef: null,
+  text: '',
+  fontSize: props.defaultFontSize || 50
+})
+
 export default compose(
   withStyles(styles),
-  withState('state', 'setState', {
-    image: null,
-    stageRef: null,
-    downloadUrl: null
-  }),
+  withState('state', 'setState', initialState),
   withHandlers(handlers),
   lifecycle(lifecycles)
 )(TextMaker)

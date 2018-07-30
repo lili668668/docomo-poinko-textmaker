@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^1.4.1",
     "@material-ui/icons": "^2.0.0",
+    "@material-ui/lab": "^1.0.0-alpha.8",
     "connected-react-router": "^4.3.0",
     "gh-pages": "^1.2.0",
     "history": "^4.7.2",
