@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 import compose from 'recompose/compose'
 import { Helmet } from 'react-helmet'
 import HomePage from './HomePage'
+import withFrame from '../shared/withFrame'
 import withRoot from '../shared/withRoot'
 
 class Home extends React.Component {
   render () {
+    const { t } = this.props
     return (
       <div>
         <Helmet>
-          <title>{'Docomo Poinko Text Maker'}</title>
+          <title>{t('Docomo Poinko Text Maker')}</title>
         </Helmet>
         <HomePage {...this.props} />
       </div>
@@ -19,5 +21,6 @@ class Home extends React.Component {
 }
 
 export default compose(
-  withRoot
+  withRoot,
+  withFrame
 )(Home)

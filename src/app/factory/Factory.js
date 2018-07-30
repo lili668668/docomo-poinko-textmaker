@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 import compose from 'recompose/compose'
 import { Helmet } from 'react-helmet'
 import FactoryPage from './FactoryPage'
+import withFrame from '../shared/withFrame'
 import withRoot from '../shared/withRoot'
 
 class Facotry extends React.Component {
   render () {
+    const { t } = this.props
     return (
       <div>
         <Helmet>
-          <title>{'Make a picture'}</title>
+          <title>{t('Make a picture')}</title>
         </Helmet>
         <FactoryPage {...this.props} />
       </div>
@@ -19,5 +21,6 @@ class Facotry extends React.Component {
 }
 
 export default compose(
-  withRoot
+  withRoot,
+  withFrame
 )(Facotry)

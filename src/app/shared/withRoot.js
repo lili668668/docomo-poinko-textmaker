@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AppWrapper from './AppWrapper'
+import { I18nextProvider, translate } from 'react-i18next'
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import pages from '../pages'
+import i18n from './i18n'
 
 function findActivePage(currentPages, match) {
   const activePage = currentPages.find(page => match.path === page.pathname)
@@ -12,17 +15,20 @@ function withRoot(Component) {
   class WithRoot extends React.Component {
     getChildContext () {
       const { match } = this.props
-        return {
-          pages,
-          activePage: findActivePage(pages, match)
-        }
+      return {
+        pages,
+        activePage: findActivePage(pages, match)
+      }
     }
 
     render () {
       return (
-        <AppWrapper>
-          <Component { ...this.props } />
-        </AppWrapper>
+        <I18nextProvider i18n={i18n}>
+          <MuiThemeProvider>
+            <CssBaseline />
+            <Component { ...this.props } />
+          </MuiThemeProvider>
+        </I18nextProvider>
       )
     }
   }
@@ -36,7 +42,7 @@ function withRoot(Component) {
     activePage: PropTypes.object
   }
 
-  return WithRoot
+  return translate()(WithRoot)
 }
 
 export default withRoot

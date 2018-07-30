@@ -37,7 +37,7 @@ const styles = theme => ({
 })
 
 function TextMaker (props) {
-  const { classes, picture, state } = props
+  const { classes, picture, state, t } = props
   const {
     handleDownload,
     handleStageRef,
@@ -95,7 +95,7 @@ function TextMaker (props) {
       <div>
         <TextField
           className={classes.formItem}
-          label="Text"
+          label={t('Text')}
           value={text}
           onChange={handleTextChange}
           fullWidth
@@ -103,37 +103,37 @@ function TextMaker (props) {
         />
         <TextField
           className={classes.formItem}
-          label="Text Size"
+          label={t('Text Size')}
           type="number"
           value={fontSize}
           onChange={handleFontSizeChange}
           fullWidth
         />
         <div className={classes.formItem}>
-          <p>You can drag text to move it.</p>
+          <p>{t('You can drag text to move it')}</p>
           <div className={classes.container}>
             <TextField
               className={classes.positionInput}
-              label="X"
+              label={t('X')}
               type="number"
               value={textX}
               onChange={handleTextXChange}
             />
             <TextField
               className={classes.positionInput}
-              label="Y"
+              label={t('Y')}
               type="number"
               value={textY}
               onChange={handleTextYChange}
             />
             <Button onClick={handleResetTextPosition} className={classes.button}>
-              reset position
+              {t('Reset Position')}
             </Button>
           </div>
         </div>
         <div className={classes.formItem}>
           <TextField
-            label="Filename"
+            label={t('Filename')}
             value={filename}
             onChange={handleFilenameChange}
             fullWidth
@@ -144,7 +144,7 @@ function TextMaker (props) {
             variant="contained"
             color="primary"
           >
-            Download
+            {t('Download')}
           </Button>
         </div>
       </div>
@@ -154,6 +154,7 @@ function TextMaker (props) {
 
 TextMaker.propsTypes = {
   picture: PropTypes.string.isRequire,
+  t: PropTypes.func.isRequire,
   defaultFontSize: PropTypes.number,
   defaultTextX: PropTypes.number,
   defaultTextY: PropTypes.number

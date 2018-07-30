@@ -9,14 +9,14 @@ const styles = theme => ({
 })
 
 function FactoryPage (props) {
-  const { classes, match } = props
+  const { classes, match, t } = props
   const target = poinkos.find(poinko => poinko.key === match.params.id)
   return (
     <div>
       <Grid container>
         <Grid item xs />
         <Grid item xs>
-          <TextMaker picture={target} />
+          <TextMaker picture={target} t={t} />
         </Grid>
         <Grid item xs />
       </Grid>
