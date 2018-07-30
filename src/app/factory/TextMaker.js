@@ -6,11 +6,32 @@ import Konva from 'konva'
 import { Stage, Layer, Image, Text, Rect } from 'react-konva'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Slider from '@material-ui/lab/Slider'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 
 const styles = theme => ({
-  slider: {
-    width: 300
+  picture: {
+    paddingTop: 30,
+    paddingBottom: 30
+  },
+  formItem: {
+    marginTop: 15,
+    marginBottom: 15
+  },
+  button: {
+    width: '100%',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  positionInput: {
+    width: '48%',
+    marginLeft: '1%',
+    marginRight: '1%'
   }
 })
 
@@ -21,7 +42,8 @@ function TextMaker (props) {
     handleStageRef,
     handleTextChange,
     handleFontSizeChange,
-    handleTextDragStart,
+    handleTextXChange,
+    handleTextYChange,
     handleTextDragEnd,
     handleResetTextPosition
   } = props
@@ -31,56 +53,83 @@ function TextMaker (props) {
     fontSize,
     textX,
     textY,
-    textBorderColor
   } = state
   const width = picture.width
   const height = picture.height
   return (
     <div>
-      <Button onClick={handleDownload}>
-        Download
-      </Button>
-      <Stage
-        width={width}
-        height={height}
-        ref={handleStageRef}
-      >
-        <Layer>
-          <Image image={image} />
-          <Text
-            width={width}
-            x={textX}
-            y={textY}
-            text={text}
-            align="center"
-            fill="white"
-            fontSize={fontSize}
-            fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
-            fontStyle="bold"
-            stroke="black"
-          />
-          <Rect
-            width={width}
-            height={fontSize}
-            x={textX}
-            y={textY}
-            stroke={textBorderColor}
-            onDragStart={handleTextDragStart}
-            onDragEnd={handleTextDragEnd}
-            draggable
-          />
-        </Layer>
-      </Stage>
-      <TextField
-        value={text}
-        onChange={handleTextChange}
-      />
-      <div className={classes.slider}>
-        <Slider value={fontSize} onChange={handleFontSizeChange} />
+      <div className={classes.picture}>
+        <Stage
+          width={width}
+          height={height}
+          ref={handleStageRef}
+        >
+          <Layer>
+            <Image image={image} />
+            <Text
+              width={width}
+              x={textX}
+              y={textY}
+              text={text}
+              align="center"
+              fill="white"
+              fontSize={fontSize}
+              fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
+              fontStyle="bold"
+              stroke="black"
+              onDragEnd={handleTextDragEnd}
+              draggable
+            />
+          </Layer>
+        </Stage>
       </div>
-      <Button onClick={handleResetTextPosition}>
-        reset position
-      </Button>
+      <div>
+        <TextField
+          className={classes.formItem}
+          label="Text"
+          value={text}
+          onChange={handleTextChange}
+          fullWidth
+          multiline
+        />
+        <TextField
+          className={classes.formItem}
+          label="Text Size"
+          type="number"
+          value={fontSize}
+          onChange={handleFontSizeChange}
+          fullWidth
+        />
+        <div
+          className={[classes.container, classes.formItem].join(' ')}
+        >
+          <TextField
+            className={classes.positionInput}
+            label="X"
+            type="number"
+            value={textX}
+            onChange={handleTextXChange}
+          />
+          <TextField
+            className={classes.positionInput}
+            label="Y"
+            type="number"
+            value={textY}
+            onChange={handleTextYChange}
+          />
+          <Button onClick={handleResetTextPosition} className={classes.button}>
+            reset position
+          </Button>
+        </div>
+        <Button
+          onClick={handleDownload}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+        >
+          Download
+        </Button>
+      </div>
     </div>
   )
 }
@@ -122,19 +171,18 @@ const handlers = {
     setState({ ...state, text: event.target.value })
   },
   handleFontSizeChange: ({ state, setState }) => (event, value) => {
-    setState({ ...state, fontSize: value })
-  },
-  handleTextDragStart: ({ state, setState }) => (event) => {
-    setState({ ...state, textBorderColor: 'red' })
+    setState({ ...state, fontSize: value || event.target.value })
   },
   handleTextDragEnd: ({ state, setState, picture: { width, height } }) => (event) => {
-    let x = event.target.x()
-    let y = event.target.y()
-    if (x > width * 2) x = 0
-    if (x < 0 - width) x = 0
-    if (y > height) y = height - 100
-    if (y < 0) y = 0
-    setState({ ...state, textX: x, textY: y, textBorderColor: 'transparent' })
+    const x = event.target.x()
+    const y = event.target.y()
+    setState({ ...state, textX: x, textY: y })
+  },
+  handleTextXChange: ({ state, setState }) => (event) =>{
+    setState({ ...state, textX: parseInt(event.target.value) })
+  },
+  handleTextYChange: ({ state, setState }) => (event) =>{
+    setState({ ...state, textY: parseInt(event.target.value) })
   },
   handleResetTextPosition: ({ state, setState, ...props }) => () =>{
     setState({ ...state, ...(initialTextPosition(props)) })
@@ -146,8 +194,7 @@ const initialState = (props) => ({
   stageRef: null,
   text: '',
   ...(initialTextPosition(props)),
-  fontSize: props.defaultFontSize || 50,
-  textBorderColor: 'transparent'
+  fontSize: props.defaultFontSize || 50
 })
 
 const initialTextPosition = (props) => ({
