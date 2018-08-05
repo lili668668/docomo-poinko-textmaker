@@ -53,7 +53,6 @@ const getWidthAndHeight = (picture) => {
 function TextMaker (props) {
   const { classes, picture, state, t } = props
   const {
-    handleDownload,
     handleProduce,
     handleUnproduce,
     handleStageRef,
@@ -229,18 +228,6 @@ const lifecycles = {
 }
 
 const handlers = {
-  handleDownload: ({ state: { stageRef, filename } }) => () => {
-    const downloadName = filename !== undefined && filename !== '' ? filename : 'poinko'
-    const url = stageRef.getStage().toDataURL()
-    const a = document.createElement('a')
-    a.style.display = 'none'
-    a.setAttribute('download', `${downloadName}.png`)
-    a.setAttribute('target', '_blank')
-    a.href = url
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-  },
   handleProduce: ({ state, setState }) => () => {
     setState({ ...state, downloadUrl: state.stageRef.getStage().toDataURL(), isDownloading: true })
   },
