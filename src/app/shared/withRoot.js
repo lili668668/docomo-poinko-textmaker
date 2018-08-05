@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { I18nextProvider, translate } from 'react-i18next'
-import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import pages from '../pages'
 import i18n from './i18n'
@@ -24,10 +23,10 @@ function withRoot(Component) {
     render () {
       return (
         <I18nextProvider i18n={i18n}>
-          <MuiThemeProvider>
+          <div>
             <CssBaseline />
             <Component { ...this.props } />
-          </MuiThemeProvider>
+          </div>
         </I18nextProvider>
       )
     }

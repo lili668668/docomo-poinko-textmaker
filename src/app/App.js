@@ -1,27 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { ConnectedRouter } from 'connected-react-router'
+import { Router } from 'react-router'
 import { Switch, Route } from 'react-router-dom'
 import pages from './pages'
 
 function App (props, context) {
   const { history } = props
-  const { store } = context
   return (
-    <ConnectedRouter history={history}>
+    <Router history={history}>
       <Switch>
         {pages.map(page => ( <Route key={page.pathname} path={page.pathname} exact component={page.component} /> ))}
       </Switch>
-    </ConnectedRouter>
+    </Router>
   )
 }
 
 App.propTypes = {
   history: PropTypes.object
-}
-
-App.contextTypes = {
-  store: PropTypes.object
 }
 
 export default App

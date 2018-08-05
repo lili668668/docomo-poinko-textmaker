@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import TextMaker from './TextMaker'
 import poinkos from '../../assets/poinkos'
 
-const styles = theme => ({
-})
-
 function FactoryPage (props) {
-  const { classes, match, t } = props
+  const { match, t } = props
   const target = poinkos.find(poinko => poinko.key === match.params.id)
   return (
     <div>
@@ -24,4 +20,9 @@ function FactoryPage (props) {
   )
 }
 
-export default withStyles(styles)(FactoryPage)
+FactoryPage.propsTypes = {
+  match: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
+}
+
+export default FactoryPage

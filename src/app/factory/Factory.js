@@ -20,6 +20,10 @@ class Facotry extends React.Component {
   }
 }
 
+Facotry.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
 export default compose(
   withRoot,
   withFrame

@@ -20,6 +20,10 @@ class Info extends React.Component {
   }
 }
 
+Info.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
 export default compose(
   withRoot,
   withFrame

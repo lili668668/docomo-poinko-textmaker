@@ -21,4 +21,8 @@ function InfoPage (props) {
   )
 }
 
+InfoPage.propTypes = {
+  classes: PropTypes.object.isRquired
+}
+
 export default withStyles(styles)(InfoPage)

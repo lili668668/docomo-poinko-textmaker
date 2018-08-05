@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import AppBar from '@material-ui/core/AppBar'
@@ -74,7 +73,8 @@ function withFrame(Component) {
     }
 
     render () {
-      const { children, classes, t } = this.props
+      const { classes, ...props } = this.props
+      const { t } = props
 
       if (!this.context.activePage) {
         throw new Error('Missing activePage.')
@@ -84,15 +84,11 @@ function withFrame(Component) {
       const title = this.context.activePage.title !== false ? this.context.activePage.title : null
       const appBar = this.context.activePage.appBar !== false
 
-      let disablePermanent = false
-      let navIconClassName = ''
       let appBarClassName = classes.appBar
 
       if (title === null) {
-        disablePermanent = true
         appBarClassName += ` ${classes.appBarHome}`
       } else {
-        navIconClassName = classes.navIconHide
         appBarClassName += ` ${classes.appBarShift}`
       }
 
@@ -124,7 +120,7 @@ function withFrame(Component) {
             </AppBar>
           )}
           <div className={classes.content}>
-            <Component { ...this.props } />
+            <Component { ...props } />
           </div>
         </div>
       )
@@ -132,7 +128,6 @@ function withFrame(Component) {
   }
 
   WithFrame.propTypes = {
-    children: PropTypes.node.isRequired,
     classes: PropTypes.object.isRequired
   }
 

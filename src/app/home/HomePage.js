@@ -28,13 +28,17 @@ function HomePage (props) {
         {poinkos.map(poinko => (
           <GridListTile key={poinko.key} cols={1}>
             <ButtonBase component={Link} to={`/factory/${poinko.key}`} className={classes.link}>
-              <img src={poinko.src} className={classes.picture} />
+              <img src={poinko.src} className={classes.picture} alt="poinko" />
             </ButtonBase>
           </GridListTile>
         ))}
       </GridList>
     </div>
   )
+}
+
+HomePage.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(HomePage)

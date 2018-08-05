@@ -2,13 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { compose, withState, withHandlers, lifecycle } from 'recompose'
-import Konva from 'konva'
 import { Stage, Layer, Image, Text, Rect } from 'react-konva'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 
 const styles = theme => ({
@@ -119,7 +115,7 @@ function TextMaker (props) {
               </Stage>
             )}
             {isDownloading && (
-              <img src={downloadUrl} />
+              <img src={downloadUrl} alt="poinko" />
              )}
           </Grid>
           <Grid item xs></Grid>
@@ -188,7 +184,7 @@ function TextMaker (props) {
           <Button
             component="a"
             href={downloadUrl}
-            download={downloadName}
+            download={`${downloadName}.png`}
             className={classes.buttonHalf}
             variant="contained"
             color="primary"
@@ -210,8 +206,9 @@ function TextMaker (props) {
 }
 
 TextMaker.propsTypes = {
-  picture: PropTypes.string.isRequire,
-  t: PropTypes.func.isRequire,
+  classes: PropTypes.object.isRequired,
+  picture: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
   defaultFontSize: PropTypes.number,
   defaultTextX: PropTypes.number,
   defaultTextY: PropTypes.number
@@ -249,10 +246,10 @@ const handlers = {
     setState({ ...state, textX: x, textY: y })
   },
   handleTextXChange: ({ state, setState }) => (event) => {
-    setState({ ...state, textX: parseInt(event.target.value) })
+    setState({ ...state, textX: parseInt(event.target.value, 10) })
   },
   handleTextYChange: ({ state, setState }) => (event) => {
-    setState({ ...state, textY: parseInt(event.target.value) })
+    setState({ ...state, textY: parseInt(event.target.value, 10) })
   },
   handleResetTextPosition: ({ state, setState, ...props }) => () => {
     setState({ ...state, ...(initialTextPosition(props)) })

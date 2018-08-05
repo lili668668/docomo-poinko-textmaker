@@ -20,6 +20,10 @@ class Home extends React.Component {
   }
 }
 
+Home.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
 export default compose(
   withRoot,
   withFrame
