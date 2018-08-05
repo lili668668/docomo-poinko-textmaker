@@ -84,7 +84,7 @@ function TextMaker (props) {
                   fontStyle="bold"
                   stroke="black"
                   onDragEnd={handleTextDragEnd}
-                  draggable
+                  draggable={text !== undefined || text !== ''}
                 />
               </Layer>
             </Stage>
