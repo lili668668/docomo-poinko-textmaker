@@ -25,6 +25,13 @@ const styles = theme => ({
     marginTop: 10,
     marginBottom: 10
   },
+  buttonHalf: {
+    width: '48%',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: '1%',
+    marginRight: '1%'
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -47,6 +54,8 @@ function TextMaker (props) {
   const { classes, picture, state, t } = props
   const {
     handleDownload,
+    handleProduce,
+    handleUnproduce,
     handleStageRef,
     handleTextChange,
     handleFontSizeChange,
@@ -62,92 +71,114 @@ function TextMaker (props) {
     fontSize,
     textX,
     textY,
-    filename
+    filename,
+    isDownloading,
+    downloadUrl
   } = state
   const { width, height } = getWidthAndHeight(picture)
+  const downloadName = filename !== undefined && filename !== '' ? filename : 'poinko'
   return (
     <div>
       <div className={classes.picture}>
         <Grid container>
           <Grid item xs></Grid>
           <Grid item xs>
-            <Stage
-              width={width}
-              height={height}
-              ref={handleStageRef}
-            >
-              <Layer>
-                <Image
-                  image={image}
-                  width={width}
-                  height={height}
-                />
-                <Rect
-                  width={width}
-                  height={height}
-                  preventDefault={false}
-                />
-                {(text !== undefined && text !== '') && (
-                  <Text
+            {!isDownloading && (
+              <Stage
+                width={width}
+                height={height}
+                ref={handleStageRef}
+              >
+                <Layer>
+                  <Image
+                    image={image}
                     width={width}
-                    x={textX}
-                    y={textY}
-                    text={text}
-                    align="center"
-                    fill="white"
-                    fontSize={fontSize}
-                    fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
-                    fontStyle="bold"
-                    stroke="black"
-                    onDragEnd={handleTextDragEnd}
-                    draggable
+                    height={height}
                   />
-                )}
-              </Layer>
-            </Stage>
+                  <Rect
+                    width={width}
+                    height={height}
+                    preventDefault={false}
+                  />
+                  {(text !== undefined && text !== '') && (
+                    <Text
+                      width={width}
+                      x={textX}
+                      y={textY}
+                      text={text}
+                      align="center"
+                      fill="white"
+                      fontSize={fontSize}
+                      fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
+                      fontStyle="bold"
+                      stroke="black"
+                      onDragEnd={handleTextDragEnd}
+                      draggable
+                    />
+                  )}
+                </Layer>
+              </Stage>
+            )}
+            {isDownloading && (
+              <img src={downloadUrl} />
+             )}
           </Grid>
           <Grid item xs></Grid>
         </Grid>
       </div>
-      <div>
-        <TextField
-          className={classes.formItem}
-          label={t('Text')}
-          value={text}
-          onChange={handleTextChange}
-          fullWidth
-          multiline
-        />
-        <TextField
-          className={classes.formItem}
-          label={t('Text Size')}
-          type="number"
-          value={fontSize}
-          onChange={handleFontSizeChange}
-          fullWidth
-        />
-        <div className={classes.formItem}>
-          <p>{t('You can drag text to move it')}</p>
-          <div className={classes.container}>
-            <TextField
-              className={classes.positionInput}
-              label={t('X')}
-              type="number"
-              value={textX}
-              onChange={handleTextXChange}
-            />
-            <TextField
-              className={classes.positionInput}
-              label={t('Y')}
-              type="number"
-              value={textY}
-              onChange={handleTextYChange}
-            />
-            <Button onClick={handleResetTextPosition} className={classes.button}>
-              {t('Reset Position')}
-            </Button>
+      {!isDownloading && (
+        <div>
+          <TextField
+            className={classes.formItem}
+            label={t('Text')}
+            value={text}
+            onChange={handleTextChange}
+            fullWidth
+            multiline
+          />
+          <TextField
+            className={classes.formItem}
+            label={t('Text Size')}
+            type="number"
+            value={fontSize}
+            onChange={handleFontSizeChange}
+            fullWidth
+          />
+          <div className={classes.formItem}>
+            <p>{t('You can drag text to move it')}</p>
+            <div className={classes.container}>
+              <TextField
+                className={classes.positionInput}
+                label={t('X')}
+                type="number"
+                value={textX}
+                onChange={handleTextXChange}
+              />
+              <TextField
+                className={classes.positionInput}
+                label={t('Y')}
+                type="number"
+                value={textY}
+                onChange={handleTextYChange}
+              />
+              <Button onClick={handleResetTextPosition} className={classes.button}>
+                {t('Reset Position')}
+              </Button>
+            </div>
           </div>
         </div>
+      )}
+      {!isDownloading && (
+        <Button
+          onClick={handleProduce}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+        >
+          {t('Produce a picture')}
+        </Button>
+      )}
+      {isDownloading && (
         <div className={classes.formItem}>
           <TextField
             label={t('Filename')}
@@ -156,15 +187,25 @@ function TextMaker (props) {
             fullWidth
           />
           <Button
-            onClick={handleDownload}
-            className={classes.button}
+            component="a"
+            href={downloadUrl}
+            download={downloadName}
+            className={classes.buttonHalf}
             variant="contained"
             color="primary"
           >
             {t('Download')}
           </Button>
+        <Button
+          onClick={handleUnproduce}
+          className={classes.buttonHalf}
+          variant="contained"
+          color="secondary"
+        >
+          {t('Back to fix picture')}
+        </Button>
         </div>
-      </div>
+       )}
     </div>
   )
 }
@@ -200,6 +241,12 @@ const handlers = {
     a.click()
     document.body.removeChild(a)
   },
+  handleProduce: ({ state, setState }) => () => {
+    setState({ ...state, downloadUrl: state.stageRef.getStage().toDataURL(), isDownloading: true })
+  },
+  handleUnproduce: ({ state, setState }) => () => {
+    setState({ ...state, isDownloading: false })
+  },
   handleStageRef: ({ state, setState }) => (node) => {
     setState({ ...state, stageRef: node })
   },
@@ -233,7 +280,10 @@ const initialState = (props) => ({
   stageRef: null,
   text: '',
   ...(initialTextPosition(props)),
-  fontSize: props.defaultFontSize || 50
+  fontSize: props.defaultFontSize || 50,
+  isDownloading: false,
+  downloadUrl: '',
+  filename: ''
 })
 
 const initialTextPosition = (props) => ({
