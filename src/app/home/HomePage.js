@@ -21,9 +21,10 @@ const styles = theme => ({
 
 function HomePage (props) {
   const { classes } = props
+  const cellHeight = window.innerWidth / 4
   return (
     <div>
-      <GridList cellHeight={300} cols={4}>
+      <GridList cellHeight={cellHeight} cols={4}>
         {poinkos.map(poinko => (
           <GridListTile key={poinko.key} cols={1}>
             <ButtonBase component={Link} to={`/factory/${poinko.key}`} className={classes.link}>
