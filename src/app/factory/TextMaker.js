@@ -77,20 +77,27 @@ function TextMaker (props) {
                   width={width}
                   height={height}
                 />
-                <Text
+                <Rect
                   width={width}
-                  x={textX}
-                  y={textY}
-                  text={text}
-                  align="center"
-                  fill="white"
-                  fontSize={fontSize}
-                  fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
-                  fontStyle="bold"
-                  stroke="black"
-                  onDragEnd={handleTextDragEnd}
-                  draggable={text !== undefined && text !== ''}
+                  height={height}
+                  preventDefault={false}
                 />
+                {(text !== undefined && text !== '') && (
+                  <Text
+                    width={width}
+                    x={textX}
+                    y={textY}
+                    text={text}
+                    align="center"
+                    fill="white"
+                    fontSize={fontSize}
+                    fontFamily="Noto Sans CJK TC, Microsoft JhengHei, Microsoft YaHei, sans-serif"
+                    fontStyle="bold"
+                    stroke="black"
+                    onDragEnd={handleTextDragEnd}
+                    draggable
+                  />
+                )}
               </Layer>
             </Stage>
           </Grid>
