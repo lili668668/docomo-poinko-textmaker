@@ -57,8 +57,9 @@ function TextMaker (props) {
     textY,
     filename
   } = state
-  const width = picture.width
-  const height = picture.height
+  const isWindowSmallerThanPicture = picture.width > window.innerWidth
+  const width = isWindowSmallerThanPicture ? window.innerWidth : picture.width
+  const height = isWindowSmallerThanPicture ? picture.height * (window.innerWidth / picture.width) : picture.height
   return (
     <div>
       <div className={classes.picture}>
@@ -71,7 +72,11 @@ function TextMaker (props) {
               ref={handleStageRef}
             >
               <Layer>
-                <Image image={image} />
+                <Image
+                  image={image}
+                  width={width}
+                  height={height}
+                />
                 <Text
                   width={width}
                   x={textX}
