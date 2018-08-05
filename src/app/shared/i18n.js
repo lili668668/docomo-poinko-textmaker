@@ -10,6 +10,10 @@ i18n
   .init({
     fallbackLng: 'zh',
 
+    backend: {
+      loadPath: 'locales/{{lng}}/{{ns}}.json'
+    },
+
     // have a common namespace used around the full app
     ns: ['translations'],
     defaultNS: 'translations',
