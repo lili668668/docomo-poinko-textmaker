@@ -184,10 +184,11 @@ const lifecycles = {
 
 const handlers = {
   handleDownload: ({ state: { stageRef, filename } }) => () => {
+    const downloadName = filename !== undefined && filename !== '' ? filename : 'poinko'
     const url = stageRef.getStage().toDataURL()
     const a = document.createElement('a')
     a.style.display = 'none'
-    a.setAttribute('download', `${filename}.png`)
+    a.setAttribute('download', `${downloadName}.png`)
     a.setAttribute('target', '_blank')
     a.href = url
     document.body.appendChild(a)
