@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 const styles = theme => ({
   root: {
@@ -57,6 +60,10 @@ function withFrame(Component) {
       this.setState({ mobileOpen: false })
     }
 
+    handleLastPageClick = () => {
+      this.props.history.push('/')
+    }
+
     render () {
       const { children, classes, t } = this.props
 
@@ -64,6 +71,7 @@ function withFrame(Component) {
         throw new Error('Missing activePage.')
       }
 
+      const lastPage = this.context.activePage.lastPage !== false ? this.context.activePage.lastPage : null
       const title = this.context.activePage.title !== false ? this.context.activePage.title : null
       const appBar = this.context.activePage.appBar !== false
 
@@ -84,6 +92,14 @@ function withFrame(Component) {
           {appBar && (
             <AppBar className={appBarClassName}>
               <Toolbar>
+                {lastPage !== null && (
+                  <IconButton
+                    color="inherit"
+                    onClick={this.handleLastPageClick}
+                  >
+                    <KeyboardBackspaceIcon />
+                  </IconButton>
+                )}
                 {title !== null && (
                   <Typography className={classes.title} variant="title" color="inherit" noWrap>
                     {t(title)}
