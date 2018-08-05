@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import InfoIcon from '@material-ui/icons/Info'
 
 const styles = theme => ({
   root: {
@@ -17,7 +18,8 @@ const styles = theme => ({
   },
   title: {
     marginLeft: 24,
-    flex: '0 1 auto'
+    flex: '0 1 auto',
+    flexGrow: 1
   },
   appBar: {
     transition: theme.transitions.create('width'),
@@ -43,6 +45,9 @@ const styles = theme => ({
     flex: '1 1 100%',
     maxWidth: '100%',
     margin: '0 auto'
+  },
+  infoIcon: {
+    right: 0
   }
 })
 
@@ -62,6 +67,10 @@ function withFrame(Component) {
 
     handleLastPageClick = () => {
       this.props.history.push('/')
+    }
+
+    handleInfoClick = () => {
+      this.props.history.push('/info')
     }
 
     render () {
@@ -105,6 +114,12 @@ function withFrame(Component) {
                     {t(title)}
                   </Typography>
                 )}
+                <IconButton
+                  color="inherit"
+                  onClick={this.handleInfoClick}
+                >
+                  <InfoIcon className={classes.infoIcon} />
+                </IconButton>
               </Toolbar>
             </AppBar>
           )}
