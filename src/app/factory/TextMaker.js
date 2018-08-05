@@ -36,6 +36,13 @@ const styles = theme => ({
   }
 })
 
+const getWidthAndHeight = (picture) => {
+  const isWindowSmallerThanPicture = picture.width > window.innerWidth
+  const width = isWindowSmallerThanPicture ? window.innerWidth : picture.width
+  const height = isWindowSmallerThanPicture ? picture.height * (window.innerWidth / picture.width) : picture.height
+  return { width, height }
+}
+
 function TextMaker (props) {
   const { classes, picture, state, t } = props
   const {
@@ -57,9 +64,7 @@ function TextMaker (props) {
     textY,
     filename
   } = state
-  const isWindowSmallerThanPicture = picture.width > window.innerWidth
-  const width = isWindowSmallerThanPicture ? window.innerWidth : picture.width
-  const height = isWindowSmallerThanPicture ? picture.height * (window.innerWidth / picture.width) : picture.height
+  const { width, height } = getWidthAndHeight(picture)
   return (
     <div>
       <div className={classes.picture}>
@@ -233,7 +238,7 @@ const initialState = (props) => ({
 
 const initialTextPosition = (props) => ({
   textX: props.defaultTextX || 0,
-  textY: props.defaultTextY || (props.picture.height - 100)
+  textY: props.defaultTextY || (getWidthAndHeight(props.picture).height - 100)
 })
 
 export default compose(
