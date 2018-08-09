@@ -6,6 +6,7 @@ import { Stage, Layer, Image, Text, Rect } from 'react-konva'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
+import ColorPicker from './ColorPicker'
 
 const styles = theme => ({
   picture: {
@@ -123,6 +124,7 @@ function TextMaker (props) {
       </div>
       {!isDownloading && (
         <div>
+          <ColorPicker />
           <TextField
             className={classes.formItem}
             label={t('Text')}
