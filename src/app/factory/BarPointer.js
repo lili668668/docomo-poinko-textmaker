@@ -7,20 +7,21 @@ const styles = theme => ({
     width: '12px',
     height: '12px',
     borderRadius: '6px',
-    boxShadow: 'inset 0 0 0 1px #fff',
-    transform: 'translate(-6px, -6px)',
+    transform: 'translate(-6px, -1px)',
+    backgroundColor: 'rgb(248, 248, 248)',
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.37)',
   }
 })
 
-function ColorPickerPointer (props) {
+function BarPointer (props) {
   const { classes } = props
   return (
     <div className={classes.pointer}></div>
   )
 }
 
-ColorPickerPointer.propsTypes = {
+BarPointer.propsTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ColorPickerPointer)
+export default withStyles(styles)(BarPointer)

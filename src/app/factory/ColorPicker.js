@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { compose, withState, withHandlers } from 'recompose'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import TextField from '@material-ui/core/TextField'
 import Popover from '@material-ui/core/Popover'
 import { CustomPicker as withColorWrap } from 'react-color'
-import { Saturation } from 'react-color/lib/components/common'
+import { Saturation, Alpha, Hue } from 'react-color/lib/components/common'
+import BarPointer from './BarPointer'
 import ColorPickerPointer from './ColorPickerPointer'
 
 const styles = theme => ({
@@ -21,9 +23,38 @@ const styles = theme => ({
     boxShadow: '0 0 0 2px rgba(0,0,0,.1)',
     display: 'inline-block'
   },
-  section: {
+  paddingTopWrap: {
+    paddingTop: '8px'
+  },
+  popoverSection: {
     width: '300px',
     height: '400px'
+  },
+  saturationSection: {
+    width: '300px',
+    height: '300px',
+    position: 'relative',
+  },
+  alphaSection: {
+    height: '10px',
+    position: 'relative',
+  },
+  hueSection: {
+    height: '10px',
+    position: 'relative',
+  },
+  rgbaSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  textSection: {
+    width: '23%',
+    paddingRight: '1%',
+    paddingLeft: '1%'
+  },
+  text: {
+    width: '100%'
   },
   saturation: {
     width: '100%',
@@ -34,9 +65,21 @@ const styles = theme => ({
   }
 })
 
+const numeral = (something) => {
+  if (!something) return 0
+  return Number(something)
+}
+
+const calculA = (a) => {
+  if (!a) return 0
+  const fa = Number(a)
+  if (fa < 0) return 0
+  if (fa > 1) return 1
+}
+
 function ColorPicker (props) {
   const { classes, ...otherProps } = props
-  const { t, state, rgb } = otherProps
+  const { t, state, rgb, onChange } = otherProps
   const {
     handleColorSectionClick,
     handleColorClose
@@ -65,12 +108,72 @@ function ColorPicker (props) {
           horizontal: 'center',
         }}
       >
-        <div className={classes.section}>
-          <Saturation
-            className={classes.saturation}
-            {...otherProps}
-            pointer={ColorPickerPointer}
-          />
+        <div className={classes.popoverSection}>
+          <div className={classes.saturationSection}>
+            <Saturation
+              className={classes.saturation}
+              {...otherProps}
+              pointer={ColorPickerPointer}
+            />
+          </div>
+          <div className={classes.paddingTopWrap}>
+            <div className={classes.hueSection}>
+              <Hue
+                {...otherProps}
+                pointer={BarPointer}
+              />
+            </div>
+          </div>
+          <div className={classes.paddingTopWrap}>
+            <div className={classes.alphaSection}>
+              <Alpha
+                {...otherProps}
+                pointer={BarPointer}
+              />
+            </div>
+          </div>
+          <div className={classes.rgbaSection}>
+            <span className={classes.textSection}>
+              <TextField
+                className={classes.text}
+                label={'R'}
+                value={rgb.r}
+                onChange={(event) => {
+                  onChange({ ...rgb, r: numeral(event.target.value), source: 'rgb' })
+                }}
+              />
+            </span>
+            <span className={classes.textSection}>
+              <TextField
+                className={classes.text}
+                label={'G'}
+                value={rgb.g}
+                onChange={(event) => {
+                  onChange({ ...rgb, g: numeral(event.target.value), source: 'rgb' })
+                }}
+              />
+            </span>
+            <span className={classes.textSection}>
+              <TextField
+                className={classes.text}
+                label={'B'}
+                value={rgb.b}
+                onChange={(event) => {
+                  onChange({ ...rgb, b: numeral(event.target.value), source: 'rgb' })
+                }}
+              />
+            </span>
+            <span className={classes.textSection}>
+              <TextField
+                className={classes.text}
+                label={'A'}
+                value={rgb.a}
+                onChange={(event) => {
+                  onChange({ ...rgb, a: event.target.value, source: 'rgb' })
+                }}
+              />
+            </span>
+          </div>
         </div>
       </Popover>
     </div>
